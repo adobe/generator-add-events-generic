@@ -23,19 +23,16 @@ class EventsStandardGenerator extends EventsGenerator {
   }
 
   writing () {
-    this.sourceRoot(path.join(__dirname, '.'))
+    this.sourceRoot(path.join(__dirname, './templates'))
 
-    this.addEvents(this.regDetails, './templates/events-generic.js',{
+    this.addEvents(this.regDetails, './events-generic.js',{
+      testFile: './test/events-generic.test.js',
       sharedLibFile: commonTemplates.utils,
       sharedLibTestFile: commonTemplates['utils.test'],
-      dependencies: {
-        '@adobe/aio-sdk': commonDependencyVersions['@adobe/aio-sdk'],
-        'node-fetch': '^2.6.0'
-      },
       actionManifestConfig: {
         web: 'no',
         inputs: { LOG_LEVEL: 'debug' },
-        annotations: { 'require-adobe-auth': false, final: true } // makes sure loglevel cannot be overwritten by request param
+        annotations: { 'require-adobe-auth': false, final: true }
       }
     })
   }
