@@ -1,0 +1,16 @@
+$schema: http://json-schema.org/draft-07/schema
+$id: https://adobe.io/schemas/app-builder-templates/1
+
+categories:
+  - helper-template
+  - events
+
+# extensions:
+#  - extensionPointId: my/extension/point/id
+#  - extensionPointId: my/second/extension/point/id
+
+# workspaces:
+#   - Staging
+#   - Production
+
+# runtime: true
