@@ -9,8 +9,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const { EventsGenerator, constants, commonTemplates } = require("@adobe/generator-app-common-lib")
-const { commonDependencyVersions } = constants
+const { EventsGenerator, commonTemplates } = require("@adobe/generator-app-common-lib")
 const path = require('path')
 
 class EventsStandardGenerator extends EventsGenerator {
