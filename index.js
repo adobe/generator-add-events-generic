@@ -1,5 +1,5 @@
 /*
-Copyright 2022 Adobe. All rights reserved.
+Copyright 2023 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -9,31 +9,34 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const { EventsGenerator, commonTemplates } = require("@adobe/generator-app-common-lib")
+const { EventsGenerator, commonTemplates } = require('@adobe/generator-app-common-lib')
 const path = require('path')
 
 class EventsStandardGenerator extends EventsGenerator {
   constructor (args, opts) {
     super(args, opts)
+    this.props = {}
   }
 
-  async prompting() {
-    this.regDetails = await this.promptForEventsDetails({regName: 'Event Registration Default', regDesc:'Registration for IO Events'})
+  async prompting () {
+    this.props.regDetails = await this.promptForEventsDetails({ regName: 'Event Registration Default', regDesc: 'Registration for IO Events' })
   }
 
   writing () {
-    this.sourceRoot(path.join(__dirname, './templates'))
+    if (this.props.regDetails) {
+      this.sourceRoot(path.join(__dirname, './templates'))
 
-    this.addEvents(this.regDetails, './events-generic.js',{
-      testFile: './test/events-generic.test.js',
-      sharedLibFile: commonTemplates.utils,
-      sharedLibTestFile: commonTemplates['utils.test'],
-      actionManifestConfig: {
-        web: 'no',
-        inputs: { LOG_LEVEL: 'debug' },
-        annotations: { 'require-adobe-auth': false, final: true }
-      }
-    })
+      this.addEvents(this.props.regDetails, './events-generic.js', {
+        testFile: './test/events-generic.test.js',
+        sharedLibFile: commonTemplates.utils,
+        sharedLibTestFile: commonTemplates['utils.test'],
+        actionManifestConfig: {
+          web: 'no',
+          inputs: { LOG_LEVEL: 'debug' },
+          annotations: { 'require-adobe-auth': false, final: true }
+        }
+      })
+    }
   }
 }
 

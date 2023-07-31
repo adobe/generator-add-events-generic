@@ -5,12 +5,7 @@ categories:
   - helper-template
   - events
 
-# extensions:
-#  - extensionPointId: my/extension/point/id
-#  - extensionPointId: my/second/extension/point/id
+apis:
+  - code: AdobeIOManagementAPISDK
 
-# workspaces:
-#   - Staging
-#   - Production
-
-# runtime: true
+runtime: true

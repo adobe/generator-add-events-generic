@@ -14,7 +14,7 @@ async function main () {
 
   const env = yeoman.createEnv()
   const gen = env.instantiate(
-    theGenerator, 
+    theGenerator,
     {
       options
     }
