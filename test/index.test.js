@@ -137,6 +137,12 @@ beforeEach(() => {
   )
 })
 
+describe('prototype', () => {
+  test('exports a yeoman generator', () => {
+    expect(theGeneratorPath.prototype).toBeInstanceOf(Generator)
+  })
+})
+
 describe('run', () => {
   test('test events template', async () => {
     const options = cloneDeep(global.basicGeneratorOptions)
