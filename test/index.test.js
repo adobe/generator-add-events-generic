@@ -32,6 +32,9 @@ const theGeneratorPath = require('../index')
 const Generator = require('yeoman-generator')
 const { constants } = require('@adobe/generator-app-common-lib')
 
+/**
+ * @param {string} actionName The provided runtime action name
+ */
 function assertGeneratedFiles (actionName) {
   assert.file(`${constants.actionsDirname}/${actionName}/index.js`)
   assert.file(`${constants.actionsDirname}/utils.js`)
@@ -41,6 +44,10 @@ function assertGeneratedFiles (actionName) {
 }
 
 /* eslint no-unused-vars: 0 */
+/**
+ * @param {string} actionName The provided runtime action name
+ * @param {string} pkgName Package name under which the action is installed
+ */
 function assertManifestContent (actionName, pkgName) {
   const json = yaml.load(fs.readFileSync('ext.config.yaml').toString())
   expect(json.runtimeManifest.packages).toBeDefined()
@@ -83,11 +90,18 @@ function assertManifestContent (actionName, pkgName) {
 }
 
 // .env file contents
+/**
+ * @param {string} prevContent Previous content of the .env file
+ * @param {string} newContent New content of the .env file
+ */
 function assertEnvContent (prevContent, newContent) {
   assert.fileContent('.env', prevContent + newContent)
 }
 
 // action file contents
+/**
+ * @param {string} actionName The provided runtime action name
+ */
 function assertEventCodeContent (actionName) {
   const theFile = `${constants.actionsDirname}/${actionName}/index.js`
   // a few checks to make sure the action calls the events sdk to publish cloud events
