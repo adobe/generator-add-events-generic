@@ -1,5 +1,5 @@
 {
-  "name": "generator-add-events-generic",
+  "name": "@adobe/generator-add-events-generic",
   "description": "Add your template's description here",
   "version": "0.0.1",
   "keywords": [
@@ -11,6 +11,7 @@
     "yeoman-environment": "^3",
     "yeoman-generator": "^5"
   },
+  "license": "Apache-2.0",
   "devDependencies": {
     "@adobe/aio-lib-template-validation": "^4.0.0",
     "fs-extra": "^10",
@@ -33,5 +34,8 @@
     "test": "npm run lint && npm run unit-tests && npm run validate",
     "lint": "eslint .",
     "unit-tests": "jest -c ./jest.config.js"
+  },
+  "engines": {
+    "node": "^14.18 || ^16.13 || >=18"
   }
 }
