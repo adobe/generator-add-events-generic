@@ -170,7 +170,7 @@ describe('prototype', () => {
 })
 
 describe('run', () => {
-  test('test events template', async () => {
+  test('events template', async () => {
     const options = cloneDeep(global.basicGeneratorOptions)
     const prevDotEnvContent = 'PREVIOUSCONTENT\n'
     try {
@@ -193,7 +193,7 @@ describe('run', () => {
     assertEnvContent(prevDotEnvContent, newEnvContent)
   })
 
-  test('test template with registration name already exists', async () => {
+  test('template with registration name already exists', async () => {
     const options = cloneDeep(global.basicGeneratorOptions)
     const prevDotEnvContent = `PREVIOUSCONTENT${EOL}## Provider metadata to provider id mapping\nAIO_events_providermetadata_to_provider_mapping=provider-metadata-1:provider-id-1`
     await helpers.run(theGeneratorPath)
@@ -238,7 +238,7 @@ describe('run', () => {
     assertNodeEngines(fs, constants.nodeEngines)
   })
 
-  test('test template with --skip-prompt true', async () => {
+  test('template with --skip-prompt true', async () => {
     theGeneratorPath.prototype.promptForEventsDetails = jest.fn().mockResolvedValue(undefined)
     const options = cloneDeep(global.basicGeneratorOptions)
     options['skip-prompt'] = true
