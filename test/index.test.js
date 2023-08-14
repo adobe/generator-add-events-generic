@@ -96,7 +96,8 @@ function assertManifestContent (actionName, pkgName) {
  * @param {string} newContent New content of the .env file
  */
 function assertEnvContent (prevContent, newContent) {
-  assert.fileContent('.env', prevContent + newContent)
+  const finalContent = prevContent + newContent
+  assert.fileContent('.env', finalContent.trim())
 }
 
 // action file contents
@@ -172,7 +173,7 @@ describe('prototype', () => {
 describe('run', () => {
   test('events template', async () => {
     const options = cloneDeep(global.basicGeneratorOptions)
-    const prevDotEnvContent = 'PREVIOUSCONTENT\n'
+    const prevDotEnvContent = `PREVIOUSCONTENT${EOL}`
     try {
       await helpers.run(theGeneratorPath)
         .withOptions(options)
@@ -195,7 +196,7 @@ describe('run', () => {
 
   test('template with registration name already exists', async () => {
     const options = cloneDeep(global.basicGeneratorOptions)
-    const prevDotEnvContent = `PREVIOUSCONTENT${EOL}## Provider metadata to provider id mapping\nAIO_events_providermetadata_to_provider_mapping=provider-metadata-1:provider-id-1`
+    const prevDotEnvContent = `PREVIOUSCONTENT${EOL}## Provider metadata to provider id mapping${EOL}AIO_events_providermetadata_to_provider_mapping=provider-metadata-1:provider-id-1`
     await helpers.run(theGeneratorPath)
       .withOptions(options)
       .inTmpDir(dir => {
