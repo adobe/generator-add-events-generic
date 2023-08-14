@@ -96,8 +96,7 @@ function assertManifestContent (actionName, pkgName) {
  * @param {string} newContent New content of the .env file
  */
 function assertEnvContent (prevContent, newContent) {
-  assert.fileContent('.env', newContent)
-  assert.fileContent('.env', prevContent)
+  assert.fileContent('.env', prevContent + newContent)
 }
 
 // action file contents
@@ -190,7 +189,7 @@ describe('run', () => {
     assertEventCodeContent(actionName)
     assertManifestContent(actionName)
     assertNodeEngines(fs, constants.nodeEngines)
-    const newEnvContent = '## Provider metadata to provider id mapping\nAIO_events_providermetadata_to_provider_mapping=provider-metadata-1:provider-id-1,provider-metadata-2:provider-id-2'
+    const newEnvContent = `## Provider metadata to provider id mapping${EOL}AIO_events_providermetadata_to_provider_mapping=provider-metadata-1:provider-id-1,provider-metadata-2:provider-id-2`
     assertEnvContent(prevDotEnvContent, newEnvContent)
   })
 
