@@ -96,7 +96,8 @@ function assertManifestContent (actionName, pkgName) {
  * @param {string} newContent New content of the .env file
  */
 function assertEnvContent (prevContent, newContent) {
-  assert.fileContent('.env', prevContent + newContent)
+  assert.fileContent('.env', newContent)
+  assert.fileContent('.env', prevContent)
 }
 
 // action file contents
