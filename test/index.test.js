@@ -57,7 +57,7 @@ function assertManifestContent (actionName, pkgName) {
   pkgName = pkgName || path.basename(process.cwd())
 
   expect(json.runtimeManifest.packages[pkgName].actions[actionName]).toEqual({
-    function: path.normalize(`${constants.actionsDirname}/${actionName}/index.js`),
+    function: `${constants.actionsDirname}/${actionName}/index.js`,
     web: 'no',
     runtime: constants.defaultRuntimeKind,
     inputs: {
