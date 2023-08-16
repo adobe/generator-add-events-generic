@@ -57,7 +57,7 @@ function assertManifestContent (actionName, pkgName) {
   pkgName = pkgName || path.basename(process.cwd())
 
   expect(json.runtimeManifest.packages[pkgName].actions[actionName]).toEqual({
-    function: path.normalize(`${constants.actionsDirname}/${actionName}/index.js`),
+    function: `${constants.actionsDirname}/${actionName}/index.js`,
     web: 'no',
     runtime: constants.defaultRuntimeKind,
     inputs: {
@@ -96,7 +96,8 @@ function assertManifestContent (actionName, pkgName) {
  * @param {string} newContent New content of the .env file
  */
 function assertEnvContent (prevContent, newContent) {
-  assert.fileContent('.env', prevContent + newContent)
+  const finalContent = prevContent + newContent
+  assert.fileContent('.env', finalContent.trim())
 }
 
 // action file contents
@@ -170,9 +171,9 @@ describe('prototype', () => {
 })
 
 describe('run', () => {
-  test('test events template', async () => {
+  test('events template', async () => {
     const options = cloneDeep(global.basicGeneratorOptions)
-    const prevDotEnvContent = 'PREVIOUSCONTENT\n'
+    const prevDotEnvContent = `PREVIOUSCONTENT${EOL}`
     try {
       await helpers.run(theGeneratorPath)
         .withOptions(options)
@@ -189,13 +190,13 @@ describe('run', () => {
     assertEventCodeContent(actionName)
     assertManifestContent(actionName)
     assertNodeEngines(fs, constants.nodeEngines)
-    const newEnvContent = '## Provider metadata to provider id mapping\nAIO_events_providermetadata_to_provider_mapping=provider-metadata-1:provider-id-1,provider-metadata-2:provider-id-2'
+    const newEnvContent = `## Provider metadata to provider id mapping${EOL}AIO_events_providermetadata_to_provider_mapping=provider-metadata-1:provider-id-1,provider-metadata-2:provider-id-2`
     assertEnvContent(prevDotEnvContent, newEnvContent)
   })
 
-  test('test template with registration name already exists', async () => {
+  test('template with registration name already exists', async () => {
     const options = cloneDeep(global.basicGeneratorOptions)
-    const prevDotEnvContent = `PREVIOUSCONTENT${EOL}## Provider metadata to provider id mapping\nAIO_events_providermetadata_to_provider_mapping=provider-metadata-1:provider-id-1`
+    const prevDotEnvContent = `PREVIOUSCONTENT${EOL}## Provider metadata to provider id mapping${EOL}AIO_events_providermetadata_to_provider_mapping=provider-metadata-1:provider-id-1`
     await helpers.run(theGeneratorPath)
       .withOptions(options)
       .inTmpDir(dir => {
@@ -238,7 +239,7 @@ describe('run', () => {
     assertNodeEngines(fs, constants.nodeEngines)
   })
 
-  test('test template with --skip-prompt true', async () => {
+  test('template with --skip-prompt true', async () => {
     theGeneratorPath.prototype.promptForEventsDetails = jest.fn().mockResolvedValue(undefined)
     const options = cloneDeep(global.basicGeneratorOptions)
     options['skip-prompt'] = true
