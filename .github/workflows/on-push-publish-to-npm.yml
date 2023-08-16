@@ -7,16 +7,15 @@ on:
       - 'package.json'
 jobs:
   publish:
-    if: github.repository_owner == 'adobe'
+    if: github.repository == 'adobe/generator-add-events-generic'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 14
+          node-version: 16
       - run: npm install
       - run: npm test
       - uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}
-          access: 'public'

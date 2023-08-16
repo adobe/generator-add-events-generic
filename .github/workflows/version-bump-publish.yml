@@ -4,14 +4,15 @@ on:
     inputs:
       level:
         description: '<newversion> | major | minor | patch | premajor | preminor | prepatch | prerelease'
-        required: false
-        default: ''
+        required: true
+        default: 'patch'
       tag:
         description: 'The tag to publish to.'
         required: false
         default: 'latest'
 jobs:
   checkout:
+    if: github.repository == 'adobe/generator-add-events-generic'
     name: checkout
     runs-on: ubuntu-latest
     steps:
