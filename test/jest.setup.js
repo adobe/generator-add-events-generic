@@ -32,6 +32,13 @@ global.assertNodeEngines = (fs, nodeEngines) => {
   }))
 }
 
+global.assertDependencies = (fs, dependencies, devDependencies) => {
+  expect(JSON.parse(fs.readFileSync('package.json').toString())).toEqual(expect.objectContaining({
+    dependencies,
+    devDependencies
+  }))
+}
+
 global.basicGeneratorOptions = {
   'action-folder': 'actions',
   'config-path': 'ext.config.yaml',
