@@ -190,6 +190,7 @@ describe('run', () => {
     assertEventCodeContent(actionName)
     assertManifestContent(actionName)
     assertNodeEngines(fs, constants.nodeEngines)
+    assertDependencies(fs, { '@adobe/aio-sdk': expect.any(String) }, { '@openwhisk/wskdebug': expect.any(String) })
     const newEnvContent = `## Provider metadata to provider id mapping${EOL}AIO_events_providermetadata_to_provider_mapping=provider-metadata-1:provider-id-1,provider-metadata-2:provider-id-2`
     assertEnvContent(prevDotEnvContent, newEnvContent)
   })
@@ -237,6 +238,7 @@ describe('run', () => {
     const newEnvContent = ',provider-metadata-2:provider-id-2'
     assertEnvContent(prevDotEnvContent, newEnvContent)
     assertNodeEngines(fs, constants.nodeEngines)
+    assertDependencies(fs, { '@adobe/aio-sdk': expect.any(String) }, { '@openwhisk/wskdebug': expect.any(String) })
   })
 
   test('template with --skip-prompt true', async () => {

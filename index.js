@@ -9,7 +9,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const { EventsGenerator, commonTemplates } = require('@adobe/generator-app-common-lib')
+const { EventsGenerator, commonTemplates, constants } = require('@adobe/generator-app-common-lib')
+const { commonDependencyVersions } = constants
 const path = require('path')
 
 class EventsStandardGenerator extends EventsGenerator {
@@ -34,6 +35,9 @@ class EventsStandardGenerator extends EventsGenerator {
           web: 'no',
           inputs: { LOG_LEVEL: 'debug' },
           annotations: { 'require-adobe-auth': false, final: true }
+        },
+        dependencies: {
+          '@adobe/aio-sdk': commonDependencyVersions['@adobe/aio-sdk']
         }
       })
     }
