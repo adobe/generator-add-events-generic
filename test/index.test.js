@@ -241,7 +241,27 @@ describe('run', () => {
     assertDependencies(fs, { '@adobe/aio-sdk': expect.any(String) }, { '@openwhisk/wskdebug': expect.any(String) })
   })
 
-  test('template with --skip-prompt true', async () => {
+  test('template with --skip-prompt true to have no effect', async () => {
+    const options = cloneDeep(global.basicGeneratorOptions)
+    options['skip-prompt'] = true
+    const prevDotEnvContent = `PREVIOUSCONTENT${EOL}`
+    await helpers.run(theGeneratorPath)
+      .withOptions(options)
+      .inTmpDir(dir => {
+        fs.writeFileSync(path.join(dir, '.env'), prevDotEnvContent)
+      })
+
+    const actionName = 'test-action'
+    assertGeneratedFiles(actionName)
+    assertEventCodeContent(actionName)
+    assertManifestContent(actionName)
+    assertNodeEngines(fs, constants.nodeEngines)
+    assertDependencies(fs, { '@adobe/aio-sdk': expect.any(String) }, { '@openwhisk/wskdebug': expect.any(String) })
+    const newEnvContent = `## Provider metadata to provider id mapping${EOL}AIO_events_providermetadata_to_provider_mapping=provider-metadata-1:provider-id-1,provider-metadata-2:provider-id-2`
+    assertEnvContent(prevDotEnvContent, newEnvContent)
+  })
+
+  test('template with undefined event reg details', async () => {
     theGeneratorPath.prototype.promptForEventsDetails = jest.fn().mockResolvedValue(undefined)
     const options = cloneDeep(global.basicGeneratorOptions)
     options['skip-prompt'] = true
