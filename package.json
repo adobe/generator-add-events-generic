@@ -6,7 +6,7 @@
     "ecosystem:aio-app-builder-templates"
   ],
   "dependencies": {
-    "@adobe/generator-app-common-lib": "^0.4.1",
+    "@adobe/generator-app-common-lib": "^0.4.2",
     "upath": "^1.2.0",
     "yeoman-environment": "^3",
     "yeoman-generator": "^5"
@@ -14,13 +14,13 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "@adobe/aio-lib-template-validation": "^4.0.0",
-    "@adobe/eslint-config-aio-lib-config": "^2.0.1",
+    "@adobe/eslint-config-aio-lib-config": "^2.0.2",
     "eslint": "^8.46.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-import": "^2.28.0",
     "eslint-plugin-jest": "^27.2.3",
     "eslint-plugin-jsdoc": "^42.0.0",
-    "eslint-plugin-n": "^16.0.1",
+    "eslint-plugin-n": "^15.7.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-standard": "^4.0.1",
