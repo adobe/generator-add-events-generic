@@ -50,14 +50,11 @@ function assertGeneratedFiles (actionName) {
  * @param {string} actionName The provided runtime action name
  * @param {string} pkgName Package name under which the action is installed
  */
-function assertManifestContent (actionName, pkgName) {
-  const json = yaml.load(fs.readFileSync(`src/${pkgName}/ext.config.yaml`).toString())
+function assertManifestContent (actionName) {
+  const json = yaml.load(fs.readFileSync(`src/dx-excshell-1/ext.config.yaml`).toString())
   expect(json.runtimeManifest.packages).toBeDefined()
 
-  // default packageName is path.basename(path.dirname('ext.config.yaml'))
-  pkgName = pkgName || path.basename(process.cwd())
-
-  expect(json.runtimeManifest.packages[pkgName].actions[actionName]).toEqual({
+  expect(json.runtimeManifest.packages['dx-excshell-1'].actions[actionName]).toEqual({
     function: `${constants.actionsDirname}/${actionName}/index.js`,
     web: 'no',
     runtime: constants.defaultRuntimeKind,
@@ -68,6 +65,31 @@ function assertManifestContent (actionName, pkgName) {
       final: true,
       'require-adobe-auth': false
     }
+  })
+}
+
+function assertEventRegistrations () {
+  const json = yaml.load(fs.readFileSync(`app.config.yaml`).toString())
+  expect(json.extensions['dx/excshell/1'].events).toBeDefined()
+  expect(Object.keys(json.extensions['dx/excshell/1'].events.registrations).length).toBe(1)
+  expect(json.extensions['dx/excshell/1'].events.registrations['test-name']).toEqual({
+    description: 'test-desc',
+    events_of_interest: [
+      {
+        event_codes: [
+          'event-metadata-1',
+          'event-metadata-2'
+        ],
+        provider_metadata: 'provider-metadata-1'
+      },
+      {
+        event_codes: [
+          'event-metadata-3'
+        ],
+        provider_metadata: 'provider-metadata-2'
+      }
+    ],
+    runtime_action: 'dx-excshell-1/test-action'
   })
 }
 
@@ -169,7 +191,8 @@ describe('run', () => {
 
     assertGeneratedFiles(actionName)
     assertEventCodeContent(actionName)
-    assertManifestContent(actionName, 'dx-excshell-1')
+    assertManifestContent(actionName)
+    assertEventRegistrations ()
     assertNodeEngines(fs, constants.nodeEngines)
     assertDependencies(fs, { '@adobe/aio-sdk': expect.any(String) }, { '@openwhisk/wskdebug': expect.any(String) })
     const newEnvContent = `## Provider metadata to provider id mapping${EOL}AIO_EVENTS_PROVIDERMETADATA_TO_PROVIDER_MAPPING=provider-metadata-1:provider-id-1,provider-metadata-2:provider-id-2`
@@ -215,7 +238,8 @@ describe('run', () => {
 
     const actionName = 'test-action'
     assertGeneratedFiles(actionName)
-    assertManifestContent(actionName, 'dx-excshell-1')
+    assertManifestContent(actionName)
+    assertEventRegistrations ()
     const newEnvContent = ',provider-metadata-2:provider-id-2'
     assertEnvContent(prevDotEnvContent, newEnvContent)
     assertNodeEngines(fs, constants.nodeEngines)
@@ -235,7 +259,8 @@ describe('run', () => {
     const actionName = 'test-action'
     assertGeneratedFiles(actionName)
     assertEventCodeContent(actionName)
-    assertManifestContent(actionName, 'dx-excshell-1')
+    assertManifestContent(actionName)
+    assertEventRegistrations ()
     assertNodeEngines(fs, constants.nodeEngines)
     assertDependencies(fs, { '@adobe/aio-sdk': expect.any(String) }, { '@openwhisk/wskdebug': expect.any(String) })
     const newEnvContent = `## Provider metadata to provider id mapping${EOL}AIO_EVENTS_PROVIDERMETADATA_TO_PROVIDER_MAPPING=provider-metadata-1:provider-id-1,provider-metadata-2:provider-id-2`
@@ -257,6 +282,7 @@ describe('run', () => {
     assert.noFile(`src/dx-excshell-1/${constants.actionsDirname}/${actionName}/index.js`)
     assert.noFile(`src/dx-excshell-1/${constants.actionsDirname}/utils.js`)
     assert.noFile('src/dx-excshell-1/ext.config.yaml')
+    assert.noFile('app.config.yaml')
     assert.file('.env')
     assert.noFile('package.json')
     assertEnvContent(prevDotEnvContent, '')
