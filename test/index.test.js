@@ -48,10 +48,9 @@ function assertGeneratedFiles (actionName) {
 /* eslint no-unused-vars: 0 */
 /**
  * @param {string} actionName The provided runtime action name
- * @param {string} pkgName Package name under which the action is installed
  */
 function assertManifestContent (actionName) {
-  const json = yaml.load(fs.readFileSync(`src/dx-excshell-1/ext.config.yaml`).toString())
+  const json = yaml.load(fs.readFileSync('src/dx-excshell-1/ext.config.yaml').toString())
   expect(json.runtimeManifest.packages).toBeDefined()
 
   expect(json.runtimeManifest.packages['dx-excshell-1'].actions[actionName]).toEqual({
@@ -68,8 +67,11 @@ function assertManifestContent (actionName) {
   })
 }
 
+/**
+ * Validate the event registration details
+ */
 function assertEventRegistrations () {
-  const json = yaml.load(fs.readFileSync(`app.config.yaml`).toString())
+  const json = yaml.load(fs.readFileSync('app.config.yaml').toString())
   expect(json.extensions['dx/excshell/1'].events).toBeDefined()
   expect(Object.keys(json.extensions['dx/excshell/1'].events.registrations).length).toBe(1)
   expect(json.extensions['dx/excshell/1'].events.registrations['test-name']).toEqual({
@@ -192,7 +194,7 @@ describe('run', () => {
     assertGeneratedFiles(actionName)
     assertEventCodeContent(actionName)
     assertManifestContent(actionName)
-    assertEventRegistrations ()
+    assertEventRegistrations()
     assertNodeEngines(fs, constants.nodeEngines)
     assertDependencies(fs, { '@adobe/aio-sdk': expect.any(String) }, { '@openwhisk/wskdebug': expect.any(String) })
     const newEnvContent = `## Provider metadata to provider id mapping${EOL}AIO_EVENTS_PROVIDERMETADATA_TO_PROVIDER_MAPPING=provider-metadata-1:provider-id-1,provider-metadata-2:provider-id-2`
@@ -239,7 +241,7 @@ describe('run', () => {
     const actionName = 'test-action'
     assertGeneratedFiles(actionName)
     assertManifestContent(actionName)
-    assertEventRegistrations ()
+    assertEventRegistrations()
     const newEnvContent = ',provider-metadata-2:provider-id-2'
     assertEnvContent(prevDotEnvContent, newEnvContent)
     assertNodeEngines(fs, constants.nodeEngines)
@@ -260,7 +262,7 @@ describe('run', () => {
     assertGeneratedFiles(actionName)
     assertEventCodeContent(actionName)
     assertManifestContent(actionName)
-    assertEventRegistrations ()
+    assertEventRegistrations()
     assertNodeEngines(fs, constants.nodeEngines)
     assertDependencies(fs, { '@adobe/aio-sdk': expect.any(String) }, { '@openwhisk/wskdebug': expect.any(String) })
     const newEnvContent = `## Provider metadata to provider id mapping${EOL}AIO_EVENTS_PROVIDERMETADATA_TO_PROVIDER_MAPPING=provider-metadata-1:provider-id-1,provider-metadata-2:provider-id-2`
