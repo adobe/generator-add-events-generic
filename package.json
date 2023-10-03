@@ -6,7 +6,7 @@
     "ecosystem:aio-app-builder-templates"
   ],
   "dependencies": {
-    "@adobe/generator-app-common-lib": "^0.4.2",
+    "@adobe/generator-app-common-lib": "^0.4.5",
     "upath": "^1.2.0",
     "yeoman-environment": "^3",
     "yeoman-generator": "^5"
