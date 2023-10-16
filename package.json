@@ -1,7 +1,7 @@
 {
   "name": "@adobe/generator-add-events-generic",
   "description": "Adds event registrations and a generic action",
-  "version": "0.1.4",
+  "version": "1.0.0",
   "keywords": [
     "ecosystem:aio-app-builder-templates"
   ],
