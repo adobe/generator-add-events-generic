@@ -40,6 +40,6 @@
     "unit-tests": "jest -c ./jest.config.js"
   },
   "engines": {
-    "node": "^14.18 || ^16.13 || >=18"
+    "node": ">=18"
   }
 }
