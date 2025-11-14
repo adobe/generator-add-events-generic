@@ -12,6 +12,13 @@ governing permissions and limitations under the License.
 const path = require('path')
 const { stdout, stderr } = require('stdout-stderr')
 
+// Mock Azure packages to avoid TypeSpec runtime import issues
+// These aren't needed for generator tests anyway since we mock promptForEventsDetails
+jest.mock('@azure/cosmos', () => ({}))
+jest.mock('@azure/logger', () => ({}))
+jest.mock('@azure/core-rest-pipeline', () => ({}))
+jest.mock('@azure/core-util', () => ({}))
+
 jest.setTimeout(30000)
 
 process.on('unhandledRejection', error => {

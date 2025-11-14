@@ -41,5 +41,8 @@
   },
   "engines": {
     "node": ">=18"
+  },
+  "overrides": {
+    "@azure/cosmos": "3.17.1"
   }
 }
