@@ -27,7 +27,10 @@ class EventsStandardGenerator extends EventsGenerator {
       // skip the prompting and use null to indicate no event registration will be added
       if (error.message && error.message.includes('Missing arguments: apiKey')) {
         this.log('Skipping event registration setup - workspace credentials not yet configured.')
-        this.log('You can add event registrations later using: aio app add events')
+        this.log('To configure your workspace:')
+        this.log('  1. Visit the Adobe Developer Console')
+        this.log('  2. Add the "I/O Management API" to your workspace')
+        this.log('  3. Then run: aio app add events')
         this.props.regDetails = null
       } else {
         throw error
