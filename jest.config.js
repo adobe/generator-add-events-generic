@@ -13,6 +13,11 @@ module.exports = {
   testEnvironment: 'node',
   verbose: true,
   setupFilesAfterEnv: ['./test/jest.setup.js'],
+  moduleNameMapper: {
+    // @azure/cosmos transitively pulls in @azure/logger@2.x which requires
+    // @typespec/ts-http-runtime — none of this is needed for generator tests
+    '^@azure/cosmos$': '<rootDir>/test/__mocks__/empty.js'
+  },
   collectCoverage: true,
   collectCoverageFrom: [
     './index.js'
