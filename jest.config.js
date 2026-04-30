@@ -14,9 +14,9 @@ module.exports = {
   verbose: true,
   setupFilesAfterEnv: ['./test/jest.setup.js'],
   moduleNameMapper: {
-    // @azure/logger@2.x requires @typespec/ts-http-runtime as a peer dep that
-    // may not be installed when transitive deps resolve to newer versions in CI
-    '^@typespec/ts-http-runtime(.*)$': '<rootDir>/test/__mocks__/empty.js'
+    // @azure/cosmos transitively pulls in @azure/logger@2.x which requires
+    // @typespec/ts-http-runtime — none of this is needed for generator tests
+    '^@azure/cosmos$': '<rootDir>/test/__mocks__/empty.js'
   },
   collectCoverage: true,
   collectCoverageFrom: [
